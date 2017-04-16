@@ -22,8 +22,8 @@ use HTTP::Response;
 use LWP::UserAgent;
 use URI::URL;
 
-my $ROBOT_NAME = 'KlossBot/1.0';
-my $ROBOT_MAIL = 'jkloss@cs.jhu.edu';
+my $ROBOT_NAME = 'gvijhBoy/1.0';
+my $ROBOT_MAIL = 'gvijh1@cs.jhu.edu';
 
 
 my $ua = new LWP::UserAgent;  # create an new LWP::UserAgent

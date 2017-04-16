@@ -37,7 +37,7 @@ $ua->from ( $ROBOT_MAIL );    # and give an email address in case anyone would
 # return the server's response.
 #
 
-my $request  = new HTTP::Request 'GET' => "http://www.jhu.edu";
+my $request  = new HTTP::Request 'GET' => "http://www.cs.jhu.edu";
 my $response = $ua->request( $request );
 
 #
@@ -88,6 +88,24 @@ foreach my $item (@{ $html_tree->extract_links( "img" )}) {
 
     print $furl, "\n";
 }
+
+foreach my $item (@{ $html_tree->extract_links( "a" )}) {
+
+    my $link = shift @$item;
+    my $furl = (new URI::URL $link)->abs( $response->base );
+    if ($furl=~/#/ || $furl!~/jhu.edu/)
+    {
+       # print "bloop \n";
+    }
+    else
+    {
+        print @item;
+    #print $furl, "\n";
+    }
+
+}
+
+
 
 #
 # delete the parse tree once we are done with it (otherwise perl's

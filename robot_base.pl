@@ -16,6 +16,7 @@
 #       found).
 
 use strict;
+use warnings;
 
 use Carp;
 use HTML::LinkExtor;
@@ -24,22 +25,32 @@ use HTTP::Response;
 use HTTP::Status;
 use LWP::RobotUA;
 use URI::URL;
+use WWW::Mechanize; 
+use feature 'say';
 
 URI::URL::strict( 1 );   # insure that we only traverse well formed URL's
 
 $| = 1;
 
-my $log_file = shift (@ARGV);
-my $content_file = shift (@ARGV);
-if ((!defined ($log_file)) || (!defined ($content_file))) {
+my $log_file = "C:/Users/Gitika/Documents/cs466/hw4/log_file2.txt"; #log file kaha pe hai 
+my $content_file = "C:/Users/Gitika/Documents/cs466/hw4/content_file2.txt"; # content file kaha pe hai 
+
+#my $log_file = shift (@ARGV);
+#my $content_file = shift (@ARGV);
+
+#my $log_file = shift (@ARGV);
+#my $content_file = shift (@ARGV);
+
+if ((!defined ($log_file)) || (!defined ($content_file))) { #ye bas check kar rha hai ki log file aur content file exist krte hai ya nhi 
     print STDERR "You must specify a log file, a content file and a base_url\n";
     print STDERR "when running the web robot:\n";
     print STDERR "  ./robot_base.pl mylogfile.log content.txt base_url\n";
     exit (1);
 }
 
-open LOG, ">$log_file";
-open CONTENT, ">$content_file";
+
+open LOG, ">", $log_file; #humne bas basically log file kholi hai isme
+open CONTENT, ">", $content_file; #content file kholi hai 
 
 ############################################################
 ##               PLEASE CHANGE THESE DEFAULTS             ##
@@ -48,8 +59,8 @@ open CONTENT, ">$content_file";
 # I don't want to be flamed by web site administrators for
 # the lousy behavior of your robots. 
 
-my $ROBOT_NAME = 'YourLoginBot/1.0';
-my $ROBOT_MAIL = 'yourlogin@cs.jhu.edu';
+my $ROBOT_NAME = 'gvijhrobot/1.0'; #my robot name
+my $ROBOT_MAIL = 'gvijh1@cs.jhu.edu'; #my email id
 
 #
 # create an instance of LWP::RobotUA. 
@@ -72,28 +83,117 @@ my $ROBOT_MAIL = 'yourlogin@cs.jhu.edu';
 #       thing is wrong.
 #
 
-my $robot = new LWP::RobotUA $ROBOT_NAME, $ROBOT_MAIL;
+my $robot = new LWP::RobotUA $ROBOT_NAME, $ROBOT_MAIL; #robot banaya hai jisme mera naam aur email id hai 
 
-my $base_url    = shift(@ARGV);   # the root URL we will start from
-
-my @search_urls = ();    # current URL's waiting to be trapsed
+#my $base_url    = shift(@ARGV);   # the root URL we will start from
+my $base_url    ="http://www.cs.jhu.edu";   # the root URL we will start from # base url jis website ko ye visit krega
+my @search_urls = ();    # current URL's waiting to be trapsed 
 my @wanted_urls = ();    # URL's which contain info that we are looking for
 my %relevance   = ();    # how relevant is a particular URL to our search
 my %pushed      = ();    # URL's which have either been visited or are already
                          #  on the @search_urls array
     
-push @search_urls, $base_url;
+push @search_urls, $base_url; 
+
+#print "@search_urls\n";
+# getting url links
+
+# my $count=0;
+# print "$search_urls[0]";
+# print "\n";
+
+# my $mech = WWW::Mechanize->new();
+# $mech->get( @search_urls );
+# my @links = $mech->links();
+# for my $link ( @links ) 
+# {
+	# if ($link->url=~/#/ || $link->url!~/cs.jhu.edu/)
+    # {
+       # # print "bloop \n"; 
+    # }
+    # else
+    # {
+    # #printf "%s, %s\n", $link->text, $link->url;
+   # # print "", $link->url;
+    # push @search_urls, $link->url; #this will put all the url's to be traversed in @search_urls
+    # #print "\n";
+    # $count=$count+1;
+    
+    # }
+    # #printf "%s, %s\n", $link->text, $link->url;
+# }
+
+# print "$search_urls[1] \n";
+# print "$search_urls[2] \n";
+
+
+##########################################this part works################# 
+# my $mech = WWW::Mechanize->new();
+# $mech->get( @search_urls );
+# my @links = $mech->links();
+# for my $link ( @links ) {
+	# if ($link->url=~/#/ || $link->url!~/cs.jhu.edu/)
+    # {
+        # print "bloop \n";
+    # }
+    # else
+    # {
+    # #printf "%s, %s\n", $link->text, $link->url;
+   # # print "", $link->url;
+    # push @search_urls, $link->url; #this will put all the url's to be traversed in @search_urls
+    # print "\n";
+    # }
+    # #printf "%s, %s\n", $link->text, $link->url;
+# }
+######################################3end of t]part i want#######################
+
+
+# my $request  = new HTTP::Request 'GET' => $base_url;
+# my $response = $robot->request( $request );
+# my $html_tree = new HTML::TreeBuilder;
+# $html_tree->parse( $response->content );
+    
+# foreach my $item (@{ $html_tree->extract_links( "a" )}) {
+
+    # my $link = shift @$item;
+    # my $furl = (new URI::URL $link)->abs( $response->base );
+    # if ($furl=~/#/ || $furl!~/jhu.edu/)
+    # {
+        # print "bloop \n";
+    # }
+    # else
+    # {
+    # print $furl, "\n";
+    # }
+# }
+
+
+######count of elements pushed in @search_urls and printing all the elements in the array####
+# print "let's see the count of elements";
+# print $count; 
+# foreach my $n (@search_urls) {
+  # say $n;
+  # print "\n";
+# }
+# #say scalar @search_urls;
+# print "let's see the first element";
+# print "$search_urls[1] \n";
+# print "let's see the first element";
+################ends here the printing of the elements###################
 
 
 while (@search_urls) {
+#print "NOW I AM IN THE WHILE LOOP, NOTE!";
     my $url = shift @search_urls;
-
+    #print $url;
+    
     #
     # insure that the URL is well-formed, otherwise skip it
     # if not or something other than HTTP
     #
 
     my $parsed_url = eval { new URI::URL $url; };
+    print $parsed_url;
 
     next if $@;
     next if $parsed_url->scheme !~/http/i;
@@ -106,7 +206,7 @@ while (@search_urls) {
     # 
 
     print LOG "[HEAD ] $url\n";
-
+    # print "[HEAD ] $url\n";
     my $request  = new HTTP::Request HEAD => $url;
     my $response = $robot->request( $request );
 	
@@ -114,7 +214,7 @@ while (@search_urls) {
     next if ! &wanted_content( $response->content_type );
 
     print LOG "[GET  ] $url\n";
-
+    #print "[GET  ] $url\n";
     $request->method( 'GET' );
     $response = $robot->request( $request );
 
@@ -174,7 +274,7 @@ exit (0);
 
 sub wanted_content {
     my $content = shift;
-
+    
     # right now we only accept text/html
     #  and this requires only a *very* simple set of additions
     #
