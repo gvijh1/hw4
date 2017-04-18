@@ -180,23 +180,42 @@ push @search_urls, $base_url;
 # print "$search_urls[1] \n";
 # print "let's see the first element";
 ################ends here the printing of the elements###################
-
+my $count=0;
 
 while (@search_urls) {
-#print "NOW I AM IN THE WHILE LOOP, NOTE!";
+
+    $count = $count+1;
     my $url = shift @search_urls;
-    #print $url;
     
     #
     # insure that the URL is well-formed, otherwise skip it
     # if not or something other than HTTP
     #
-
-    my $parsed_url = eval { new URI::URL $url; };
-    print $parsed_url;
+    
+    if ($url =~/cs.jhu.edu/ )
+{
+    my $parsed_url = eval { new URI::URL $url; };  #eval is parsing the content
+    
+    
+   # print "THIS IS IT .......................................................................................................................................................................";
+    #print $parsed_url;
 
     next if $@;
+    
+    print $parsed_url->scheme;
+    if($parsed_url =~/cs.jhu.edu/)
+    {
+	   # print "yes this condition works";
+    
     next if $parsed_url->scheme !~/http/i;
+    #next if $parsed_url =~/cs.jhu.edu/;
+    #print "do we have a problem here??";
+    
+    #next if $parsed_url =~/cs.jhu.edu/;
+    #next if $parsed_url->as_string !~/cs.jhu.edu/;  
+    
+   # next if $parsed_url->scheme !~/cs.jhu.edu/;
+   # next if $parsed_url->scheme =~/#/; 
 	
     #
     # get header information on URL to see it's status (exis-
@@ -206,15 +225,16 @@ while (@search_urls) {
     # 
 
     print LOG "[HEAD ] $url\n";
-    # print "[HEAD ] $url\n";
     my $request  = new HTTP::Request HEAD => $url;
     my $response = $robot->request( $request );
 	
     next if $response->code != RC_OK;
     next if ! &wanted_content( $response->content_type );
+    
+    
 
     print LOG "[GET  ] $url\n";
-    #print "[GET  ] $url\n";
+    
     $request->method( 'GET' );
     $response = $robot->request( $request );
 
@@ -223,10 +243,16 @@ while (@search_urls) {
     
     print LOG "[LINKS] $url\n";
 
-    &extract_content ($response->content, $url);
-
+   &extract_content ($response->content, $url);
+  
     my @related_urls  = &grab_urls( $response->content );
-
+    #print ".............................................................LETS SEE IF GREP IS WORKING HERE IN RELATED URLS.............................................................";
+    #print @related_urls;
+    @related_urls = grep { $_ !~/#/} @related_urls;
+    @related_urls = grep { $_ =~/cs.jhu.edu/} @related_urls;
+    #print ".............................................................LETS SEE IF GREP IS WORKING HERE IN RELATED URLS2.............................................................";
+    #print @related_urls;
+    
     foreach my $link (@related_urls) {
 
 	my $full_url = eval { (new URI::URL $link, $response->base)->abs; };
@@ -236,8 +262,10 @@ while (@search_urls) {
 	$relevance{ $full_url } = $relevance{ $link };
 	delete $relevance{ $link } if $full_url ne $link;
 
+
 	push @search_urls, $full_url and $pushed{ $full_url } = 1
 	    if ! exists $pushed{ $full_url };
+	   
 	
     }
 
@@ -245,10 +273,17 @@ while (@search_urls) {
     # reorder the urls base upon relevance so that we search
     # areas which seem most relevant to us first.
     #
-
-    @search_urls = 
-	sort { $relevance{ $a } <=> $relevance{ $b }; } @search_urls;
-
+    @search_urls = grep { $_ !~/#/} @search_urls;
+    @search_urls = grep { $_ =~/cs.jhu.edu/} @search_urls;
+    @search_urls = sort { $relevance{ $a } <=> $relevance{ $b }; } @search_urls;
+    }
+    
+    if ($count ==1)
+    {
+    close LOG;
+    close CONTENT;
+    }
+}
 }
 
 close LOG;
@@ -274,12 +309,15 @@ exit (0);
 
 sub wanted_content {
     my $content = shift;
+    # if( $content =~ m@text/html@ || $content =~m@application/postscript@)
+    # {
+	    # push @wanted_urls, $content;
     
-    # right now we only accept text/html
-    #  and this requires only a *very* simple set of additions
-    #
-
-    return $content =~ m@text/html@;
+    # print "I came in the loop";
+    # print @wanted_urls;
+    # return ($content->type);
+    # }
+    return ($content=~ m@text/html@ || $content =~m@application/postscript@);
 }
 
 #
@@ -290,22 +328,145 @@ sub wanted_content {
 #  this function should read through the context of all the text/html
 #  documents retrieved by the web robot and extract three types of
 #  contact information described in the assignment
+# &extract_content ($response->content, $url);
+# sub extract_content {
+
+    # my $content = shift;
+    # my $url = shift;
+
+    # my $email;
+    # my $phone;
+    # my $address;
+
+    # my @email = ( );
+    # my @phone = ( );
+    # my @address = ( );
+     # print $content;
+    # # parse out information you want
+    # # print it in the tuple format to the CONTENT and LOG files, for example:
+
+    # # Phone extraction
+    # @phone = $content =~ m/((1[-| ]?)?\(?(\d{3})\)?[- ]?(\d{3})[-](\d{4}))/g; 
+
+    # print @phone;
+    # foreach my $index (@phone) {    
+        # $phone = $1;
+        # print CONTENT "($url; PHONE; $phone)\n";
+        # print LOG "($url; PHONE; $phone)\n";
+    # }
+
+    # # Email extraction
+    # @email = $content =~ m/([-A-z0-9.]+@[-A-z0-9.]+)/g;
+    # foreach my $index (@email) {   
+        # $email = $1;
+        # print CONTENT "($url; EMAIL; $email)\n";
+        # print LOG "($url; EMAIL; $email)\n";
+    # }
+
+    # # Mail address extraction
+    # @address = $content =~ m/([A-Za-z\s]*,\s*(\w{2})\s*(\d{5}(?:-\d{4})?))/g;
+    # foreach my $index (@address) {
+        # $address = $1;
+        # print CONTENT "($url; CITY; $address)\n";
+        # print LOG "($url; CITY; $address)\n";
+    # }
+
+# }
+
+
 
 sub extract_content {
     my $content = shift;
     my $url = shift;
+    my @email =();
+    my @phone=();
+  
+    
+  
+    
+    
+   #print ".............................................................LETS SEE IF GREP IS WORKING HERE IN RELATED URLS.............................................................";
+   # @email = $content =~ m/^[a-z0-9.]+\@[a-z0-9.-]+$/g;
+    
+    #@email = $content =~ /([a-z0-9][-a-z0-9_\+\.]*[a-z0-9])@([a-z0-9][-a-z0-9\.]*[a-z0-9]\.(arpa|root|aero|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)|([0-9]{1,3}\.{3}[0-9]{1,3}))/g;
+   # @email = $content =~ m/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}/g;
+   
+    
+    #@email = $content =~ m/([-A-z0-9.]+@[-A-z0-9.]+\.(arpa|root|aero|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw))/g;
+    #@email = $content =~ m/^([-A-z0-9.]+@[-A-z0-9.]+\.(arpa|root|aero|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw))/g;
+    @email = $content =~ m/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}/g;
+     @email = grep { $_ !~/.png/} @email;
+     @email = grep { $_ !~/.jpeg/} @email;
+     @email = grep { $_ !~/.gif/} @email;
+     foreach (@email) {
+	   
+	# print "\nEmail: ";
+	# my $email = $1;
+	# print $email; 
+	
+	#print CONTENT "($url; EMAIL; $_)\n";
+	#print LOG "($url; EMAIL; $_)\n";
+    }
+    # foreach my $value (@email) {
+	   
+	# print "\nEmail: ";
+	# my $email = $1;
+	# print $email; 
+	# print CONTENT "($url; EMAIL; $email)\n";
+	# print LOG "($url; EMAIL; $email)\n";
+    # }
 
-    my $email;
-    my $phone;
-
-    # parse out information you want
-    # print it in the tuple format to the CONTENT and LOG files, for example:
-
-    print CONTENT "($url; EMAIL; $email)\n";
-    print LOG "($url; EMAIL; $email)\n";
-
-    print CONTENT "($url; PHONE; $phone)\n";
-    print LOG "($url; PHONE; $phone)\n";
+    #@phone = $content =~ m/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/g;
+    @phone = $content =~ /((1[-| ]?)?\(?(\d{3})\)?[- ]?(\d{3})[-](\d{4}))/g;
+    foreach my $value (@phone) {
+	   
+	#print "\nPhone: ";
+	my $phone = $1;
+	#print CONTENT "($url; Phone; $phone)\n";
+	#print LOG "($url; Phone; $phone)\n";
+    }  
+    
+    # print CONTENT $content;
+    
+    # #@address = $content =~ m/([A-Za-z\s]*,\s*(\w{2})\s*(\d{5}(?:-\d{4})?))/g;
+   # # @address = $content =~ /([A-Za-z]+(?: [A-Za-z]+){0,2},\s(?:(?:\w{2})|[A-Za-z]+\.)\s(?:\d{5}(?:-\d{4})?))/g;
+   # my @address = ($content =~ /([A-Za-z]+(?: [A-Za-z]+){0,2},\s(?:(?:\w{2})|[A-Za-z]+\.)\s(?:\d{5}(?:-\d{4})?))/g );
+    # #@address = $content =~ /([A-Za-z]+(?: [A-Za-z]+){0,2},\s(?:(?:\w{2})|[A-Za-z]+\.)\s(?:\d{5}(?:-\d{4})?))/g;
+    # print LOG @address;
+    # foreach (@address) {
+	   
+	# # print "\nEmail: ";
+	# # my $email = $1;
+	# # print $email; 
+	# print CONTENT "($url; ADDRESS; $_)\n";
+	# print LOG "($url; ADDRESS; $_)\n";
+    # }
+    
+    my $address;
+    while ($content =~ s/([A-Za-z]+,{0,1}\s[A-Za-z]+,{0,1}\s\d{5}(.\d{4}){0,1})//)
+	{
+		$address = $1;
+		print CONTENT "($url; ADDRESS; $address)\n";
+		print LOG "($url; ADDRESS; $address)\n";
+		print "ADDRESS: ", $address, "\n";
+	}
+    
+    # foreach my $value (@address) {
+	   
+	# print "\nAddress: ";
+	# my $address = $1;
+	# print CONTENT "($url; Address; $address)\n";
+	# print LOG "($url; Address; $address)\n";
+    # }  
+	  
+    # print "\nEmail: ";
+    # print $email;
+    # print CONTENT "($url; EMAIL; $email)\n";
+    # print LOG "($url; EMAIL; $email)\n";
+    # print "Phone: ";
+    # print $phone;
+    # print CONTENT "($url; PHONE; $phone)\n";
+    # print LOG "($url; PHONE; $phone)\n";
 
     return;
 }
@@ -361,6 +522,8 @@ sub grab_urls {
 	if (defined $reg_text) {
 	    $reg_text =~ s/[\n\r]/ /;
 	    $reg_text =~ s/\s{2,}/ /;
+	    
+	    
 
 	    #
 	    # compute some relevancy function here
