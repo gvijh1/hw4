@@ -32,8 +32,8 @@ URI::URL::strict( 1 );   # insure that we only traverse well formed URL's
 
 $| = 1;
 
-my $log_file = shift (@ARGV);
-my $content_file = shift (@ARGV);
+my $log_file = 'C:/Users/Gitika/Documents/cs466/hw4/log_file2.txt';
+my $content_file = 'C:/Users/Gitika/Documents/cs466/hw4/content_file2.txt';
 print 'Printing in ',$log_file;
 print "\n";
 print 'Printing in ',$content_file,"\n";
@@ -85,7 +85,7 @@ my $ROBOT_MAIL = 'gvijh1@cs.jhu.edu'; #my email id
 
 my $robot = new LWP::RobotUA $ROBOT_NAME, $ROBOT_MAIL; #robot banaya hai jisme mera naam aur email id hai 
 $robot -> delay( 2/60 );
-my $base_url    = shift(@ARGV);   # the root URL we will start from
+my $base_url    = 'http://www.cs.jhu.edu';   # the root URL we will start from
 my @search_urls = ();    # current URL's waiting to be trapsed 
 my @wanted_urls = ();    # URL's which contain info that we are looking for
 my %relevance   = ();    # how relevant is a particular URL to our search
@@ -170,6 +170,10 @@ exit (0);
 
 sub wanted_content {
     my $content = shift;
+    if ($content=~ m@text/html@ || $content =~m@application/postscript@)
+    {
+    	push @wanted_urls, $content;
+    }
     return ($content=~ m@text/html@ || $content =~m@application/postscript@);
 }
 
@@ -216,49 +220,83 @@ sub extract_content {
     return;
 }
 
-sub grab_urls {
-    my $content = shift;
-    my %urls    = ();    # NOTE: this is an associative array so that we only
-                         #       push the same "href" value once.
+sub grab_urls 
+{
+	my $content = shift;
+	my %urls    = ();		# NOTE: this is an associative array so that we only
+					# push the same "href" value once.
 
-    
-  skip:
-    while ($content =~ s/<\s*[aA] ([^>]*)>\s*(?:<[^>]*>)*(?:([^<]*)(?:<[^aA>]*>)*<\/\s*[aA]\s*>)?//) {
-	    
-	my $tag_text = $1;
-	my $reg_text = $2;
-	my $link = "";
+	skip:
 
-	if (defined $reg_text) {
-	    $reg_text =~ s/[\n\r]/ /;
-	    $reg_text =~ s/\s{2,}/ /;
-	    
-	    
+	while ($content =~ s/<\s*[aA] ([^>]*)>\s*(?:<[^>]*>)*(?:([^<]*)(?:<[^aA>]*>)*<\/\s*[aA]\s*>)?//) 
+	{
+		my $tag_text = $1;
+		my $reg_text = $2;
 
-	    #
-	    # compute some relevancy function here
-	    #
+		if (defined $reg_text) 
+		{
+			$reg_text =~ s/[\n\r]/ /;
+			$reg_text =~ s/\s{2,}/ /;
+		}
+
+		my $link = "";
+		$reg_text = "" if (!defined $reg_text);
+
+		if ($tag_text =~ /href\s*=\s*(?:["']([^"']*)["']|([^\s])*)/i) 
+		{
+			$link = $1 || $2;
+			$link = "" if (!defined $link);
+
+
+			$relevance{ $link } = &compute_relevance( $link, $reg_text );
+			$urls{ $link }      = 1;
+		}
+
+		# print $reg_text, "\n" if defined $reg_text;
+		# print $link, "\n";
 	}
 
-	if ($tag_text =~ /href\s*=\s*(?:["']([^"']*)["']|([^\s])*)/i) {
-	    $link = $1 || $2;
-
-	    #
-	    # okay, the same link may occur more than once in a
-	    # document, but currently I only consider the last
-	    # instance of a particular link
-	    #
-
-	    $relevance{ $link } = 1;
-	    $urls{ $link }      = 1;
-	}
-
-	print $reg_text, "\n" if defined $reg_text;
-	print $link, "\n\n";
-    }
-
-    return keys %urls;   # the keys of the associative array hold all the
-                         # links we've found (no repeats).
+	return keys %urls;	
+			
 }
 
+# compute_relevance
 
+sub compute_relevance
+{
+	my $link = shift;
+	my $text = shift;
+	if ($link =~ /~\w+$/)
+	{ 
+		return 1; 
+	}
+	if ($link =~ /research/)
+	{ 
+		return 2; 
+	}
+	if ($link =~ /undergraduate-studies/)
+	{ 
+		return 3; 
+	}
+	if ($link =~ /graduate-studies/)
+	{ 
+		return 4; 
+		}
+	if ($link =~ /people/)
+	{ 
+		return 5; 
+		}
+	if ($link =~ /news-events/)
+	{ 
+		return 6; 
+		}
+	if ($link =~ /alumni-giving/)
+	{ 
+		return 7; 
+		}
+	if ($link =~ /adminsupport/)
+	{ 
+		return 8; 
+		}
+	return 9;
+}

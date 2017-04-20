@@ -1,3 +1,150 @@
 [HEAD ] http://www.cs.jhu.edu
 [GET  ] http://www.cs.jhu.edu
 [LINKS] http://www.cs.jhu.edu
+(http://www.cs.jhu.edu; EMAIL; contactus@cs.jhu.edu)
+(http://www.cs.jhu.edu; EMAIL; contactus@cs.jhu.edu)
+(http://www.cs.jhu.edu; EMAIL; csnews@jhu.edu)
+(http://www.cs.jhu.edu; EMAIL; csnews@jhu.edu)
+(http://www.cs.jhu.edu; PHONE; 410-516-8775)
+(http://www.cs.jhu.edu; PHONE; 410-516-8775)
+(http://www.cs.jhu.edu; PHONE; 410-516-8775)
+(http://www.cs.jhu.edu; PHONE; 410-516-8775)
+(http://www.cs.jhu.edu; PHONE; 410-516-8775)
+[HEAD ] https://www.cs.jhu.edu/research/computational-biology-medicine/
+[GET  ] https://www.cs.jhu.edu/research/computational-biology-medicine/
+[LINKS] https://www.cs.jhu.edu/research/computational-biology-medicine/
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; EMAIL; contactus@cs.jhu.edu)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; EMAIL; contactus@cs.jhu.edu)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; EMAIL; csnews@jhu.edu)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; EMAIL; csnews@jhu.edu)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/computational-biology-medicine/; ADDRESS; welcome our 10000)
+[HEAD ] https://www.cs.jhu.edu/research/
+[GET  ] https://www.cs.jhu.edu/research/
+[LINKS] https://www.cs.jhu.edu/research/
+(https://www.cs.jhu.edu/research/; EMAIL; contactus@cs.jhu.edu)
+(https://www.cs.jhu.edu/research/; EMAIL; contactus@cs.jhu.edu)
+(https://www.cs.jhu.edu/research/; EMAIL; csnews@jhu.edu)
+(https://www.cs.jhu.edu/research/; EMAIL; csnews@jhu.edu)
+(https://www.cs.jhu.edu/research/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/; ADDRESS; welcome our 10000)
+[HEAD ] https://www.cs.jhu.edu/people/research-staff/
+[GET  ] https://www.cs.jhu.edu/people/research-staff/
+[LINKS] https://www.cs.jhu.edu/people/research-staff/
+(https://www.cs.jhu.edu/people/research-staff/; EMAIL; contactus@cs.jhu.edu)
+(https://www.cs.jhu.edu/people/research-staff/; EMAIL; contactus@cs.jhu.edu)
+(https://www.cs.jhu.edu/people/research-staff/; EMAIL; csnews@jhu.edu)
+(https://www.cs.jhu.edu/people/research-staff/; EMAIL; csnews@jhu.edu)
+(https://www.cs.jhu.edu/people/research-staff/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/people/research-staff/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/people/research-staff/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/people/research-staff/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/people/research-staff/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/people/research-staff/; ADDRESS; welcome our 10000)
+[HEAD ] https://www.cs.jhu.edu/research/systems/
+[GET  ] https://www.cs.jhu.edu/research/systems/
+[LINKS] https://www.cs.jhu.edu/research/systems/
+(https://www.cs.jhu.edu/research/systems/; EMAIL; contactus@cs.jhu.edu)
+(https://www.cs.jhu.edu/research/systems/; EMAIL; contactus@cs.jhu.edu)
+(https://www.cs.jhu.edu/research/systems/; EMAIL; csnews@jhu.edu)
+(https://www.cs.jhu.edu/research/systems/; EMAIL; csnews@jhu.edu)
+(https://www.cs.jhu.edu/research/systems/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/systems/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/systems/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/systems/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/systems/; PHONE; 410-516-8775)
+(https://www.cs.jhu.edu/research/systems/; ADDRESS; welcome our 10000)
+[HEAD ] http://cs.jhu.edu/~yanif
+[GET  ] http://cs.jhu.edu/~yanif
+[LINKS] http://cs.jhu.edu/~yanif
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~yanif; ADDRESS; Baltimore, MD 21218)
+[HEAD ] http://cs.jhu.edu/~scott
+[GET  ] http://cs.jhu.edu/~scott
+[LINKS] http://cs.jhu.edu/~scott
+(http://cs.jhu.edu/~scott; EMAIL; scott@cs.jhu.edu)
+(http://cs.jhu.edu/~scott; EMAIL; scott@cs.jhu.edu)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; PHONE; (410) 516-6134)
+(http://cs.jhu.edu/~scott; ADDRESS; Baltimore, MD 21218-2686)
+[HEAD ] http://cs.jhu.edu/~yairamir
+[GET  ] http://cs.jhu.edu/~yairamir
+[LINKS] http://cs.jhu.edu/~yairamir
+(http://cs.jhu.edu/~yairamir; PHONE; 301-806-4803)
+(http://cs.jhu.edu/~yairamir; PHONE; 301-806-4803)
+(http://cs.jhu.edu/~yairamir; PHONE; 301-806-4803)
+(http://cs.jhu.edu/~yairamir; PHONE; 301-806-4803)
+(http://cs.jhu.edu/~yairamir; PHONE; 301-806-4803)
+(http://cs.jhu.edu/~yairamir; ADDRESS; Baltimore, MD 21218)
+[HEAD ] http://cs.jhu.edu/~terzis
+[GET  ] http://cs.jhu.edu/~terzis
+[LINKS] http://cs.jhu.edu/~terzis
+(http://cs.jhu.edu/~terzis; PHONE; 410-516-5847)
+(http://cs.jhu.edu/~terzis; PHONE; 410-516-5847)
+(http://cs.jhu.edu/~terzis; PHONE; 410-516-5847)
+(http://cs.jhu.edu/~terzis; PHONE; 410-516-5847)
+(http://cs.jhu.edu/~terzis; PHONE; 410-516-5847)
+(http://cs.jhu.edu/~terzis; ADDRESS; Baltimore MD 21218)
+[HEAD ] http://www.cs.jhu.edu/~jak
+[GET  ] http://www.cs.jhu.edu/~jak
+[LINKS] http://www.cs.jhu.edu/~jak
+(http://www.cs.jhu.edu/~jak; ADDRESS; Ridge, NJ 07920)
+[HEAD ] http://www.cs.jhu.edu/~nrivera
+[GET  ] http://www.cs.jhu.edu/~nrivera
+[LINKS] http://www.cs.jhu.edu/~nrivera
+[HEAD ] http://www.cs.jhu.edu/~claudiu
+[GET  ] http://www.cs.jhu.edu/~claudiu
+[LINKS] http://www.cs.jhu.edu/~claudiu
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+(http://www.cs.jhu.edu/~claudiu; PHONE; 410-516-6134)
+[HEAD ] http://www.cs.jhu.edu/~kaplan
+[HEAD ] http://www.cs.jhu.edu/~johnlane
+[GET  ] http://www.cs.jhu.edu/~johnlane
+[LINKS] http://www.cs.jhu.edu/~johnlane
+[HEAD ] http://www.cs.jhu.edu/~dshaw
+[HEAD ] http://www.cs.jhu.edu/~ralucam
+[GET  ] http://www.cs.jhu.edu/~ralucam
+[LINKS] http://www.cs.jhu.edu/~ralucam
+(http://www.cs.jhu.edu/~ralucam; EMAIL; ralucam@cs.jhu.edu)
+(http://www.cs.jhu.edu/~ralucam; EMAIL; ralucam@cs.jhu.edu)
+(http://www.cs.jhu.edu/~ralucam; ADDRESS; Baltimore, MD 21218)
+(http://www.cs.jhu.edu/~ralucam; ADDRESS; Baltimore, MD 21218)
+[HEAD ] http://www.cs.jhu.edu/~yairamir
+[GET  ] http://www.cs.jhu.edu/~yairamir
+[LINKS] http://www.cs.jhu.edu/~yairamir
+(http://www.cs.jhu.edu/~yairamir; PHONE; 301-806-4803)
+(http://www.cs.jhu.edu/~yairamir; PHONE; 301-806-4803)
+(http://www.cs.jhu.edu/~yairamir; PHONE; 3
